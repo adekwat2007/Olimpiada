@@ -1,17 +1,22 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿// Models/EventResponsible.cs (ИСПРАВЛЕННАЯ версия)
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WebApplication1.Models
 {
+    [Table("EventResponsible")]
     public class EventResponsible
     {
-        [Required]
-        public int EventID { get; set; }
+        // В EF Core 8+ нужно использовать KeyAttribute без Order
+        // ИЛИ настроить через Fluent API
 
-        [Required]
+        public int EventID { get; set; }
         public int ResponsibleEmployeeID { get; set; }
 
-        // Навигационные свойства
-        public virtual Event Event { get; set; } = null!;
-        public virtual Employee ResponsibleEmployee { get; set; } = null!;
+        [ForeignKey("EventID")]
+        public virtual Event? Event { get; set; }
+
+        [ForeignKey("ResponsibleEmployeeID")]
+        public virtual Employee? ResponsibleEmployee { get; set; }
     }
 }
